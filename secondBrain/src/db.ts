@@ -1,10 +1,9 @@
 import mongoose,{Schema,model} from 'mongoose';
 
-mongoose.connect('mongodb+srv://devansh:<MCMeB8CTlaWGIWct>@cluster0.u6gixfu.mongodb.net/');
-
+mongoose.connect(`${process.env.MONGODB_URI}/second-brain`)
 const userSchema = new Schema({
-    username: {String,unique:true},
-    password: {String,required:true},
+    username: {type:String,unique:true},
+    password: {type:String,required:true},
 })
 
 const contentschema = new Schema({
@@ -12,14 +11,14 @@ const contentschema = new Schema({
     link:String,
     tags:[{type:mongoose.Types.ObjectId,ref:'tag'}],
     type:String,
-    userId:{type:mongoose.Types.ObjectId,ref:'user',required:true},
+    userId:{type:mongoose.Types.ObjectId,ref:'userschema',required:true},
 })
 
 const linkSchema =new Schema({
     hash:String,
-    userId:{type:mongoose.Types.ObjectId,ref:'user',required:true,unique:true},
+    userId:{type:mongoose.Types.ObjectId,ref:'userschema',required:true},
 })
 
-export const usermodel=model("user",userSchema);
-export const contentsmodel=model("content",contentschema);
-export const  linkmodel=model("link",linkSchema);
+export const usermodel=mongoose.model("user",userSchema);
+export const contentsmodel=mongoose.model("content",contentschema);
+export const  linkmodel=mongoose.model("link",linkSchema);

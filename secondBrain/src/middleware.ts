@@ -1,4 +1,3 @@
-import { JWT_SECRET } from "./config";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 
@@ -8,7 +7,7 @@ export const userMiddleware = (
   next: NextFunction
 ) => {
   const headers = req.headers.authorization;
-  const decoded = jwt.verify(headers as string, JWT_SECRET);
+  const decoded = jwt.verify(headers as string, process.env.JWT_SECRET as string);
   if (decoded) {
     if (typeof decoded === "string") {
       res.status(403).json({

@@ -1,7 +1,6 @@
 import express from 'express';
 import  jwt  from 'jsonwebtoken';
 import { contentsmodel, linkmodel, usermodel } from './db';
-import { JWT_SECRET } from './config';
 import { userMiddleware } from './middleware';
 import { random } from './utils';
 const app = express();
@@ -10,7 +9,7 @@ app.use(express.json());
 import cors from 'cors';
 
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: 'http://localhost:5173',
   credentials: true
 }));
 
@@ -47,7 +46,7 @@ app.post('/api/v1/signin', async (req, res) => {
     if(existinguser) {
         const token =jwt.sign({
             id:existinguser._id
-        },JWT_SECRET)
+        },process.env.JWT_SECRET as string)
 
         res.json({
             token
