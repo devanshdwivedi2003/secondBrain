@@ -9,7 +9,7 @@ import Usecontent from "../hooks/Usecontent"
 
 export default function Dashboard() {
   const [modalOpen, setModalOpen] = React.useState(false)
-  const content = Usecontent()
+  const content = Usecontent() || []
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50">

@@ -1,6 +1,6 @@
 import express from 'express';
 import  jwt  from 'jsonwebtoken';
-import { contentsmodel, linkmodel, usermodel } from './db';
+import connectDB, { contentsmodel, linkmodel, usermodel } from './db';
 import { userMiddleware } from './middleware';
 import { random } from './utils';
 const app = express();
@@ -9,10 +9,11 @@ app.use(express.json());
 import cors from 'cors';
 
 app.use(cors({
-  origin: 'http://localhost:5173',
-  credentials: true
+    origin: 'http://localhost:5173',
+    credentials: true
 }));
 
+connectDB();
 
 app.post('/api/v1/signup', async (req, res) => {
     const username=req.body.username;
